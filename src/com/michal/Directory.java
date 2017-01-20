@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
  */
 public class Directory {
     private File directory;
-    private ArrayList<Movie> movies;
+    public ArrayList<Movie> movies;
     private ArrayList<File> files;
     private HashMap<File, Movie> map = new HashMap<>();
 
@@ -120,7 +120,7 @@ public class Directory {
             sb.append(" ");
             sb.append(entry.getValue().getImdbRating());
 
-            File newName = new File(folderToRename.getParent() + "/" + sb.toString());
+            File newName = new File(folderToRename.getParent() + System.getProperty("file.separator") + sb.toString());
             folderToRename.renameTo(newName);
 
         }
