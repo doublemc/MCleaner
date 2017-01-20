@@ -105,24 +105,35 @@ public class Directory {
 
     public void renameFolders() {
         for (Map.Entry<File, Movie> entry : this.map.entrySet()) {
-            StringBuilder sb = new StringBuilder();
-            try {
-                entry.getValue().parseImbd();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             File folderToRename = new File(entry.getKey().getParentFile().getAbsolutePath());
-            sb.append(entry.getValue().getTitle());
-            sb.append(" ");
-            sb.append(entry.getValue().getReleaseYear());
-            sb.append(" ");
-            sb.append(entry.getValue().getGenre());
-            sb.append(" ");
-            sb.append(entry.getValue().getImdbRating());
+            Movie movie = entry.getValue();
 
-            File newName = new File(folderToRename.getParent() + System.getProperty("file.separator") + sb.toString());
+            File newName = createNewFolderName(folderToRename, movie);
             folderToRename.renameTo(newName);
 
         }
+    }
+
+    private File createNewFolderName(File folderToRename, Movie movie) {
+        try {
+            ImdbParser parser = new ImdbParser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder folderName = new StringBuilder();
+        folderName.append(movie.getTitle());
+        folderName.append(" ");
+        folderName.append(movie.getReleaseYear());
+        folderName.append(" ");
+        folderName.append(movie.getGenre());
+        folderName.append(" ");
+        folderName.append(movie.getImdbRating());
+
+        StringBuilder completePathToNewFolder = new StringBuilder(folderToRename.getParent());
+        completePathToNewFolder.append(System.getProperty("file.separator"));
+        completePathToNewFolder.append(folderName);
+
+        return new File(completePathToNewFolder.toString());
     }
 }
