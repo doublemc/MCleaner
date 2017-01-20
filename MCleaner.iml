@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="jsoup-1.10.2" level="project" />
+    <orderEntry type="library" exported="" name="commons-io-2.5-javadoc" level="project" />
   </component>
 </module>
-

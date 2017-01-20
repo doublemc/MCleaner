@@ -18,12 +18,13 @@ public class Movie {
     private float imdbRating;
     private String genre;
 
-    public static final String NAME_REGEX = "([ -\\.\\w'\\[\\]]+?)(\\W?[0-9]{4}\\.?.*)(avi|flv|mkv|mp4)";
-    public static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
-    public static final String EXTENSION_REGEX =  "^.*\\.(avi|flv|mkv|mp4)";
+    private static final String NAME_REGEX = "([ -\\.\\w'\\[\\]]+?)(\\W?[0-9]{4}\\.?.*)(avi|flv|mkv|mp4)";
 
-    public static final String XML_PART_ONE = "http://www.omdbapi.com/?t=";
-    public static final String XML_PART_TWO = "&y=&plot=short&r=xml";
+    public static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
+//    public static final String EXTENSION_REGEX =  "^.*\\.(avi|flv|mkv|mp4)";
+
+    private static final String XML_PART_ONE = "http://www.omdbapi.com/?t=";
+    private static final String XML_PART_TWO = "&y=&plot=short&r=xml";
 
 
     public Movie(String title) {
@@ -34,24 +35,20 @@ public class Movie {
         return title;
     }
 
+    public int getReleaseYear() {
+        return releaseYear;
+    }
 
     public float getImdbRating() {
         return imdbRating;
     }
 
-
     public String getGenre() {
         return genre;
     }
 
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-
-
     // parses IMDB page and sets releaseDate, genre and imdbRating in Movie objects
-    public void imdbParser() throws IOException {
+    public void parseImbd() throws IOException {
         String xmlLink = createXmlLink();
 
         // using "new Url..." because my xml is on the web, not on my disk
@@ -62,7 +59,7 @@ public class Movie {
 
             // using array to extract only last genre name - usually the most substantive one
             String[] genreArray = movieFromXml.attr("genre").split(", ");
-            this.genre = movieFromXml.attr("genre");
+            this.genre = genreArray[genreArray.length - 1];
 
             this.imdbRating = Float.parseFloat(movieFromXml.attr("imdbRating"));
 
