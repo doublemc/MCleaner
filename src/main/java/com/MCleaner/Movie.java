@@ -1,9 +1,9 @@
-package com.michal;
+package com.MCleaner;
 
 import java.util.regex.Pattern;
 
 /**
- * Created by michal on 17.01.17.
+ * Created by MCleaner on 17.01.17.
  */
 public class Movie {
     private String title;

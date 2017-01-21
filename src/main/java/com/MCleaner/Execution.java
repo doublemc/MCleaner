@@ -1,19 +1,21 @@
-package com.michal;
+package com.MCleaner;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by michal on 21.01.17.
+ * Created by MCleaner on 21.01.17.
  */
-public class Simulation implements FileOperations {
+public class Execution implements FileOperations {
     private Directory directory;
 
-    public Simulation(Directory directory) {
+    public Execution(Directory directory) {
         this.directory = directory;
     }
 
@@ -29,10 +31,21 @@ public class Simulation implements FileOperations {
             if (!movieFilesAndDirs.contains(file)) {
                 if (file.canWrite()) {
                     if (file.isDirectory()) {
-                        System.out.println("Program will delete directoryFile: " + file.getName());
+                        try {
+                            // FileUtils.deleteDirectory deletes directoryFile WITH all the files inside
+                            FileUtils.deleteDirectory(file);
+                            System.out.println("Deleted directoryFile:  " + file.getName());
+                        } catch (IOException x) {
+                            x.printStackTrace();
+                        }
                     } else {
                         // file isn't directoryFile so can be deleted with Files.deleteIfExists
-                        System.out.println("Program will delete: " + file.getName());
+                        try {
+                            Files.delete(file.toPath());
+                            System.out.println("Deleted file: " + file.getName());
+                        } catch (IOException x) {
+                            x.printStackTrace();
+                        }
                     }
                 } else {
                     System.out.println("File: " + file.getName() + " is read-only, can't access");
@@ -49,7 +62,7 @@ public class Simulation implements FileOperations {
             Movie movie = entry.getValue();
 
             File newName = directory.createNewFolderName(folderToRename, movie);
-            System.out.println("Program will rename folder: " + folderToRename.getName() + " to: " + newName.getName());
+            folderToRename.renameTo(newName);
         }
     }
 
@@ -60,7 +73,12 @@ public class Simulation implements FileOperations {
             if (file.length() < 200000000) {
                 if (!file.isDirectory()) {
                     if (file.canWrite()) {
-                        System.out.println("Program will delete sample: " + file.getName());
+                        try {
+                            Files.delete(file.toPath());
+                            System.out.println("Deleted sample " + file.getName());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         System.out.println("File is read-only");
                     }

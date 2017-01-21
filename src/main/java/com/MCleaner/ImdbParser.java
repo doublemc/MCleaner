@@ -1,15 +1,16 @@
-package com.michal;
+package com.MCleaner;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
 import org.jsoup.parser.Parser;
 
 import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created by michal on 20.01.17.
+ * Created by MCleaner on 20.01.17.
  */
 public class ImdbParser {
 

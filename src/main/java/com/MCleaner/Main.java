@@ -1,9 +1,8 @@
-package com.michal;
+package com.MCleaner;
 
 import java.util.Scanner;
 
 public class Main {
-
 
     public static void main(String[] args) {
 
@@ -14,15 +13,15 @@ public class Main {
         String confirmation = s.nextLine();
         if (confirmation.equals("yes")) {
             Directory directory = new Directory(path);
-            System.out.println("If you want to EXECUTE actions of the program please type \"execute\".\n " +
+            System.out.println("If you want to EXECUTE actions of the program please type exactly \"execute\".\n " +
                     "Be aware that actions performed by this program cannot be reverted! " +
                     "Type anything else to SIMULATE");
             String simOrExec = s.nextLine();
             if (simOrExec.equals("execute")) {
-                Execution exec = new Execution(directory);
+                FileOperations exec = new Execution(directory);
                 exec.cleanDirectory();
             } else {
-                Simulation sim = new Simulation(directory);
+                FileOperations sim = new Simulation(directory);
                 sim.cleanDirectory();
             }
 
