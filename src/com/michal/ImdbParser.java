@@ -13,14 +13,12 @@ import java.net.URL;
  */
 public class ImdbParser {
 
-    Movie movie;
-
     private static final String API_LINK_PART_ONE = "http://www.omdbapi.com/?t=";
     // between those two Strings comes name of the movie and it is then fully working link to the IMDB api
     private static final String API_LINK_PART_TWO = "&y=&plot=short&r=xml";
 
     // parses IMDB page and sets releaseDate, genre and imdbRating in Movie object
-    public void parseImbd(Movie movieToParse) throws IOException {
+    public boolean fillMovieInfo(Movie movieToParse) throws IOException {
         String xmlLink = createXmlLink(movieToParse);
 
         // using "new Url..." because my xml is on the web, not on my disk
@@ -38,8 +36,10 @@ public class ImdbParser {
             // using array to extract only year of release
             String[] dateArray = movieFromXml.attr("released").split(" ");
             movieToParse.setReleaseYear(Integer.parseInt(dateArray[2]));
+            return true;
         } else {
             System.out.println("Can't find movie: " + movieToParse.getTitle() + " on IMDB");
+            return false;
         }
 
     }
