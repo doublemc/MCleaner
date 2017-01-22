@@ -78,8 +78,6 @@ public class Directory {
             e.printStackTrace();
         }
 
-        System.out.println(folderName);
-
         StringBuilder completePathToNewFolder = new StringBuilder(folderToRename.getParent());
         completePathToNewFolder.append(System.getProperty("file.separator"));
         completePathToNewFolder.append(folderName);
